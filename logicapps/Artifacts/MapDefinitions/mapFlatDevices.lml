@@ -1,0 +1,8 @@
+$version: 1
+$input: JSON
+$output: JSON
+$sourceSchema: flatDevices.json
+$targetSchema: devices.json
+root:
+  fullName: concat(/root/firstName, " ", /root/lastName)
+  firstNameUpperCase: upper-case(/root/firstName)

@@ -1,0 +1,23 @@
+{
+    "type": "object",
+    "properties": {
+        "fullName": {
+            "type": "string"
+        },
+        "firstNameUpperCase": {
+            "type": "string"
+        },
+        "phoneAreaCode": {
+            "type": "string"
+        },
+        "phone": {
+            "type": "string"
+        },
+        "devices": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

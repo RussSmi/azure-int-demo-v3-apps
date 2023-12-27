@@ -1,0 +1,17 @@
+{
+    "type": "object",
+    "properties": {
+        "devices": {
+            "type": "string"
+        },
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "phone": {
+            "type": "string"
+        }
+    }
+}
