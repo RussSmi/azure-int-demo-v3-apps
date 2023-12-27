@@ -54,7 +54,7 @@ jobs:
       with:
         inlineScript: |
           $LogicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.LogicAppName.value -o tsv)
-          Write-Output "LogicAppName = $LogicAppName"  >> $GITHUB_OUTPUT    
+          Write-Output "LogicAppName = ${LogicAppName}"  >> $GITHUB_OUTPUT    
         azPSVersion: latest
 
     - name: Get publish Profile
@@ -66,7 +66,7 @@ jobs:
               -ResourceGroupName ${{env.RG_LA}} `
               -Name ${{ steps.bicep.outputs.LogicAppName}}
           $profile = $profile.Replace("`r", "").Replace("`n", "")
-          Write-Output "profile=$profile" >> $GITHUB_OUTPUT
+          Write-Output "profile=${profile}" >> $GITHUB_OUTPUT
         azPSVersion: latest
 
     - name: Create project folder
