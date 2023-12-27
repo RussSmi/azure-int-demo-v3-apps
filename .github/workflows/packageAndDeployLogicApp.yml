@@ -64,7 +64,7 @@ jobs:
         inlineScript: |
           $profile = Get-AzWebAppPublishingProfile `
               -ResourceGroupName ${{env.RG_LA}} `
-              -Name ${{ steps.bicep.outputs.LogicAppName}}
+              -Name ${{ steps.output.outputs.LogicAppName}}
           $profile = $profile.Replace("`r", "").Replace("`n", "")
           Write-Output "profile=${profile}" >> $GITHUB_OUTPUT
         azPSVersion: latest
