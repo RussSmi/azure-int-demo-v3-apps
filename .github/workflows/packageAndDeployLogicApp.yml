@@ -60,14 +60,17 @@ jobs:
              --parameters bicep/main.dev.bicepparam
 
     - name: Get output
-      id: output
+      id: output_step
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          $LogicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.LogicAppName.value -o tsv)
-          Write-Output "LogicAppName = ${LogicAppName}"  >> $GITHUB_OUTPUT    
+          $logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.LogicAppName.value -o tsv)
+          echo "LogicAppName=$logicAppName" >> $GITHUB_OUTPUT    
         azPSVersion: latest
-
+    
+    - name: "Trace logic app name"
+      run: |
+        echo "Output [${{steps.output_step.outputs.LogicAppName}}]"
     - name: Get publish Profile
       id: fncapp
       uses: azure/powershell@v1
@@ -75,9 +78,9 @@ jobs:
         inlineScript: |
           $profile = Get-AzWebAppPublishingProfile `
               -ResourceGroupName ${{env.RG_LA}} `
-              -Name ${{ steps.output.outputs.LogicAppName}}
-          $profile = $profile.Replace("`r", "").Replace("`n", "")
-          Write-Output "profile=${profile}" >> $GITHUB_OUTPUT
+              -Name ${{steps.output_step.outputs.LogicAppName}}
+          $profile = $profile.Replace("`r", "").Replace("`n", "")          
+          echo "profile=${profile}" >> $GITHUB_OUTPUT
         azPSVersion: latest
 
     - name: Create project folder
