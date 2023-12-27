@@ -50,7 +50,12 @@ jobs:
 
     - name: Get output
       id: output
-      run: echo "::set-output name=LogicAppName::$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.LogicAppName.value -o tsv)"
+      uses: azure/powershell@v1
+      with:
+        inlineScript: |
+          $LogicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.LogicAppName.value -o tsv)
+          Write-Output "LogicAppName = $LogicAppName"  >> $GITHUB_OUTPUT    
+        azPSVersion: latest
 
     - name: Get publish Profile
       id: fncapp
@@ -61,7 +66,7 @@ jobs:
               -ResourceGroupName ${{env.RG_LA}} `
               -Name ${{ steps.bicep.outputs.LogicAppName}}
           $profile = $profile.Replace("`r", "").Replace("`n", "")
-          Write-Output "::set-output name=profile::$profile"
+          Write-Output "profile=$profile" >> $GITHUB_OUTPUT
         azPSVersion: latest
 
     - name: Create project folder
