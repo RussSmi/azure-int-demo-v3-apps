@@ -1,14 +1,16 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: (classic) Build and Deploy Logic App. 
+name: Build and Deploy Logic App. 
 
 env:
   AZURE_LOGICAPP_PACKAGE_PATH: '.'
   RG_LA: ${{ vars.RG_PREFIX}}'app'
 
-on:
-  - workflow_dispatch 
+on: 
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
    logic_app_build: 
