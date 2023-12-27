@@ -5,7 +5,7 @@ name: Build and Deploy Logic App.
 
 env:
   AZURE_LOGICAPP_PACKAGE_PATH: '.'
-  RG_LA: ${{ vars.RG_PREFIX}}'app'
+  RG_LA: ${{ vars.RG_PREFIX}}app
 
 on: 
   push:
