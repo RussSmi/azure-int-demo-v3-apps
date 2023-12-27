@@ -13,7 +13,8 @@ var minimumElasticSize = 1
 var maximumElasticSize = 3
 
 @description('Name of the logic app storage account')
-var logicAppStorageName = substring('stla${env}${uniqueString(resourceGroup().id)}',0,24)
+var tempName = 'stla${env}${uniqueString(resourceGroup().id)}'
+var logicAppStorageName = length(tempName) > 24 ? substring('stla${env}${uniqueString(resourceGroup().id)}',0,24) : tempName
 
 resource logicAppStorage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: logicAppStorageName
