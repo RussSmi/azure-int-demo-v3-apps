@@ -4,8 +4,6 @@ param env string = 'dev'  /// Use prod for production
 param location string = resourceGroup().location
 param storageAccountSku string = 'Standard_LRS'
 @description('Service ID used in resource naming to group all related resources')
-param serviceId string
-
 
 var name = 'messaging'
 var logicAppName = 'logicapp-${name}-${env}'

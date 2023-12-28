@@ -11,7 +11,6 @@ param serviceId string
 module la 'modules/logicapp.bicep' = {
   name: 'la-mod-${env}'
   params: {
-    serviceId: serviceId
     env: env
     location: location
   }

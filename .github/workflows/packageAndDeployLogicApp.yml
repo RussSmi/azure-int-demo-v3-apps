@@ -64,7 +64,7 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          $logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.LogicAppName.value -o tsv)
+          $logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
           echo "LogicAppName=$logicAppName" >> $GITHUB_OUTPUT    
         azPSVersion: latest
     
