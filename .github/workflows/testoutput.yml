@@ -68,6 +68,7 @@ jobs:
       id: fncapp
       run: |
         profile=$(az webapp deployment list-publishing-credentials --name ${{steps.output_step.outputs.LogicAppName}} --resource-group ${{env.RG_LA}})
+        profile=$(echo $profile | tr '\n' ' ')
         echo "profile=${profile}" >> $GITHUB_OUTPUT
 
     - name: Create project folder
