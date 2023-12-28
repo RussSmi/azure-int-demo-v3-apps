@@ -66,15 +66,9 @@ jobs:
 
     - name: Get publish Profile
       id: fncapp
-      uses: azure/powershell@v1
-      with:
-        inlineScript: |
-          $profile = Get-AzWebAppPublishingProfile `
-              -ResourceGroupName ${{env.RG_LA}} `
-              -Name ${{steps.output_step.outputs.LogicAppName}}
-          $profile = $profile.Replace("`r", "").Replace("`n", "")          
-          echo "profile=${profile}" >> $GITHUB_OUTPUT
-        azPSVersion: latest
+      run: |
+        profile = az webapp deployment list-publishing-credentials --name ${{steps.output_step.outputs.LogicAppName}} --resource-group ${{env.RG_LA}}
+        echo "profile=${profile}" >> $GITHUB_OUTPUT
 
     - name: Create project folder
       run: |
