@@ -5,7 +5,8 @@ name: Build and Deploy Logic App.
 
 env:
     AZURE_LOGICAPP_PACKAGE_PATH: '.'
-    RG_LA: ${{ vars.RG_PREFIX}}app
+    RG_LA_DEV: ${{ vars.RG_PREFIX}}dev
+    RG_LA_TEST: ${{ vars.RG_PREFIX}}test
   
 on: 
   workflow_dispatch:
@@ -29,7 +30,7 @@ jobs:
     - name: Create resource group
       run: |
         az group create \
-        --name ${{env.RG_LA}} \
+        --name ${{env.RG_LA_DEV}} \
         --location ${{vars.LOCATION}} 
 
     # Deploy Bicep file
@@ -38,13 +39,13 @@ jobs:
       run: |
         az deployment group create \
         --name 'bicep-deploy-'${{ github.run_id }} \
-        --resource-group ${{env.RG_LA}} \
+        --resource-group ${{env.RG_LA_DEV}} \
         --parameters bicep/main.dev.bicepparam
 
     - name: Get output
       id: output_step
       run: |
-        logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
+        logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA_DEV}} --query properties.outputs.logicAppName.value -o tsv)
         echo "logicAppName = $logicAppName"
         echo "logicAppName=$logicAppName" >> $GITHUB_OUTPUT  
     
