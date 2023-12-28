@@ -4,31 +4,18 @@
 name: Build and Deploy Logic App. 
 
 env:
-  AZURE_LOGICAPP_PACKAGE_PATH: '.'
-  RG_LA: ${{ vars.RG_PREFIX}}app
-
+    AZURE_LOGICAPP_PACKAGE_PATH: '.'
+    RG_LA: ${{ vars.RG_PREFIX}}app
+  
 on: 
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
-   logic_app_dev_build: 
+  logic_app_dev_build: 
     runs-on: ubuntu-latest
     environment:
         name: dev
     steps: 
-
-    - name: "Example output creation"
-      id: "my_step"
-      run: |
-        my_var="Hello World"
-        echo "Output [$my_var]"
-        echo "my_var=$my_var" >> $GITHUB_OUTPUT 
-
-    - name: "Example output call between steps"
-      run: |
-        echo "Output [${{steps.my_step.outputs.my_var}}]"
 
     - name: Checkout
       uses: actions/checkout@v1
@@ -37,53 +24,33 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
-        enable-AzPSSession: true 
 
-      # Create resource group
+    # Create resource group
     - name: Create resource group
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-           az group create \
-             --name ${{env.RG_LA}} \
-             --location ${{vars.LOCATION}} 
+      run: |
+        az group create \
+        --name ${{env.RG_LA}} \
+        --location ${{vars.LOCATION}} 
 
-      # Deploy Bicep file
+    # Deploy Bicep file
     - name: Deploy Bicep
       id: bicep
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-           az deployment group create \
-             --name 'bicep-deploy-'${{ github.run_id }} \
-             --resource-group ${{env.RG_LA}} \
-             --parameters bicep/main.dev.bicepparam
+      run: |
+        az deployment group create \
+        --name 'bicep-deploy-'${{ github.run_id }} \
+        --resource-group ${{env.RG_LA}} \
+        --parameters bicep/main.dev.bicepparam
 
     - name: Get output
       id: output_step
-      uses: azure/powershell@v1
-      with:
-        inlineScript: |
-          $logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
-          echo "logicAppName = $logicAppName"
-          echo "logicAppName=$logicAppName" >> $GITHUB_OUTPUT   
-        
+      run: |
+        logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
+        echo "logicAppName = $logicAppName"
+        echo "logicAppName=$logicAppName" >> $GITHUB_OUTPUT  
     
     - name: "Trace logic app name"
       run: |
         echo "Output [${{steps.output_step.outputs.logicAppName}}]"
-
-    - name: Get publish Profile
-      id: fncapp
-      uses: azure/powershell@v1
-      with:
-        inlineScript: |
-          $profile = Get-AzWebAppPublishingProfile `
-              -ResourceGroupName ${{env.RG_LA}} `
-              -Name ${{steps.output_step.outputs.LogicAppName}}
-          $profile = $profile.Replace("`r", "").Replace("`n", "")          
-          echo "profile=${profile}" >> $GITHUB_OUTPUT
-        azPSVersion: latest
 
     - name: Create project folder
       run: |
@@ -93,7 +60,7 @@ jobs:
         cp -r 'logicapps/publisher' 'output/'
 
     - name: Easy Zip Files
-      uses: vimtor/action-zip@v1
+      uses: papeloto/action-zip@v1
       with:
         dest: '${{ github.run_id }}.zip'
         files: output/
@@ -102,7 +69,6 @@ jobs:
       uses: Azure/functions-action@v1
       id: fa
       with:
-        app-name: ${{env.RG_LA}}
+        app-name: ${{steps.output_step.outputs.LogicAppName}}
         package: '${{ github.run_id }}.zip'
-        publish-profile: ${{steps.fncapp.outputs.profile}}
 
