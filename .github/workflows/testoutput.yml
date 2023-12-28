@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and Deploy Logic App. 
+name: Test Pipeline. 
 
 env:
   AZURE_LOGICAPP_PACKAGE_PATH: '.'
@@ -55,7 +55,7 @@ jobs:
 
     - name: Get output
       run: |
-        $logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
+        logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
         echo "logicAppName = $logicAppName"
         echo "logicAppName=$logicAppName" >> $GITHUB_OUTPUT  
     
