@@ -54,6 +54,7 @@ jobs:
           --parameters bicep/main.dev.bicepparam
 
     - name: Get output
+      id: output_step
       run: |
         logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
         echo "logicAppName = $logicAppName"
