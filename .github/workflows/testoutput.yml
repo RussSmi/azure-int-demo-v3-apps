@@ -90,5 +90,5 @@ jobs:
       with:
         app-name: ${{env.RG_LA}}
         package: '${{ github.run_id }}.zip'
-        publish-profile: ${{steps.fncapp.outputs.profile}}
+        # publish-profile: ${{steps.fncapp.outputs.profile}}
 
