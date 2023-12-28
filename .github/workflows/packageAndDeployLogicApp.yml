@@ -65,12 +65,14 @@ jobs:
       with:
         inlineScript: |
           $logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
-          echo "LogicAppName=$logicAppName" >> $GITHUB_OUTPUT    
+          echo "logicAppName = $logicAppName"
+          echo "logicAppName=$logicAppName" >> $GITHUB_OUTPUT    
         azPSVersion: latest
     
     - name: "Trace logic app name"
       run: |
-        echo "Output [${{steps.output_step.outputs.LogicAppName}}]"
+        echo "Output [${{steps.output_step.outputs.logicAppName}}]"
+
     - name: Get publish Profile
       id: fncapp
       uses: azure/powershell@v1
