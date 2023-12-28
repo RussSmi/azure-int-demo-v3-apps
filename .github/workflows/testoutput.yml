@@ -8,8 +8,6 @@ env:
   RG_LA: ${{ vars.RG_PREFIX}}app
 
 on: 
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -37,37 +35,29 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
-        enable-AzPSSession: true 
+        enable-AzPSSession: true
 
       # Create resource group
     - name: Create resource group
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-           az group create \
-             --name ${{env.RG_LA}} \
-             --location ${{vars.LOCATION}} 
+      run: |
+        az group create \
+         --name ${{env.RG_LA}} \
+         --location ${{vars.LOCATION}} 
 
       # Deploy Bicep file
     - name: Deploy Bicep
       id: bicep
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-           az deployment group create \
-             --name 'bicep-deploy-'${{ github.run_id }} \
-             --resource-group ${{env.RG_LA}} \
-             --parameters bicep/main.dev.bicepparam
+      run: |
+        az deployment group create \
+          --name 'bicep-deploy-'${{ github.run_id }} \
+          --resource-group ${{env.RG_LA}} \
+          --parameters bicep/main.dev.bicepparam
 
     - name: Get output
-      id: output_step
-      uses: azure/powershell@v1
-      with:
-        inlineScript: |
-          $logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
-          echo "logicAppName = $logicAppName"
-          echo "logicAppName=$logicAppName" >> $GITHUB_OUTPUT   
-        
+      run: |
+        $logicAppName=$(az deployment group show --name bicep-deploy-${{ github.run_id }} --resource-group ${{env.RG_LA}} --query properties.outputs.logicAppName.value -o tsv)
+        echo "logicAppName = $logicAppName"
+        echo "logicAppName=$logicAppName" >> $GITHUB_OUTPUT  
     
     - name: "Trace logic app name"
       run: |
