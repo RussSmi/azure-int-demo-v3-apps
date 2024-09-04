@@ -9,11 +9,15 @@ parameters:
   default: 'rusmith-sandbox'
 
 variables:
-  vmImageName: 'ubuntu-latest'
-  location: 'uksouth'
-  templateFile: '../../bicep/main.bicep'
-  csmParametersFile: '../../bicep/main.dev.bicepparam'
-- group: ais-connection-vars-dev
+- name: vmImageName
+  value: 'ubuntu-latest'
+- name: 'location'
+  value: 'uksouth'
+- name: templateFile
+  value: '../../bicep/main.bicep'
+- name: csmParametersFile
+  value: '../../bicep/main.dev.bicepparam'
+- group: 'ais-connection-vars-dev'
   
 
 pool:
