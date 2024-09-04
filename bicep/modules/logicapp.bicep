@@ -5,14 +5,14 @@ param location string = resourceGroup().location
 param storageAccountSku string = 'Standard_LRS'
 @description('Service ID used in resource naming to group all related resources')
 
-var name = 'messaging'
-var logicAppName = 'logicapp-${name}-${env}'
+var key = uniqueString(resourceGroup().id)
+var logicAppName = 'la-${key}-${env}'
 var minimumElasticSize = 1
 var maximumElasticSize = 3
 
 @description('Name of the logic app storage account')
-var tempName = 'stla${env}${uniqueString(resourceGroup().id)}'
-var logicAppStorageName = length(tempName) > 24 ? substring('stla${env}${uniqueString(resourceGroup().id)}',0,24) : tempName
+var tempName = 'stla${env}${key}'
+var logicAppStorageName = length(tempName) > 24 ? substring('stla${env}${key}',0,24) : tempName
 
 resource logicAppStorage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: logicAppStorageName
@@ -31,7 +31,7 @@ resource logicAppStorage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 
  /// Dedicated app plan for the service ///
  resource servicePlanLogicApp 'Microsoft.Web/serverfarms@2023-01-01' = {
-  name: 'plan-${name}-logic-app-${env}'
+  name: 'plan-${logicAppName}'
   location: location
   sku: {
     tier: 'WorkflowStandard'
@@ -48,7 +48,7 @@ resource logicAppStorage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 
  // Create log analytics workspace
  resource logAnalyticsWorkspacelogicApp 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
-  name: '${name}-logicapp-loganalytics-workspace-${env}'
+  name: 'law-${key}-${env}'
   location: location
   properties: {
     sku: {
@@ -59,7 +59,7 @@ resource logicAppStorage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 
  /// Log analytics workspace insights ///
  resource applicationInsightsLogicApp 'Microsoft.Insights/components@2020-02-02' = {
-  name: 'application-insights-${name}-logic-${env}'
+  name: 'appinss-${key}-${env}'
   location: location
   kind: 'web'
   properties: {
