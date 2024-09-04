@@ -14,9 +14,9 @@ variables:
 - name: 'location'
   value: 'uksouth'
 - name: templateFile
-  value: '../../bicep/main.bicep'
+  value: '$(Build.SourcesDirectory)/bicep/main.bicep'
 - name: csmParametersFile
-  value: '../../bicep/main.dev.bicepparam'
+  value: '$(Build.SourcesDirectory)/bicep/main.dev.bicepparam'
 - group: 'ais-connection-vars-dev'
   
 
