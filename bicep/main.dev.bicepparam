@@ -1,4 +1,4 @@
 using './main.bicep'
 
-param serviceId = 'aisv3'
+param serviceId = 'aisv31'
 

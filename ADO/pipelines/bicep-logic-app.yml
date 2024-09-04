@@ -1,0 +1,35 @@
+trigger:
+- main
+
+name: Deploy Bicep files
+
+parameters:
+- name: azureServiceConnection
+  type: string
+  default: 'rusmith-sandbox'
+
+variables:
+  vmImageName: 'ubuntu-latest'
+  resourceGroupName: 'exampleRG'
+  location: 'uksouth'
+  templateFile: '../../bicep/main.bicep'
+  csmParametersFile: '../../bicep/main.dev.bicepparam'
+  - group: 'ais-connection-vars-dev'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureSubscription: '${{ parameters.azureServiceConnection }}'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '$(logic-apps-resource-group-name)'
+    location: '$(location)'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(templateFile)'
+    csmParametersFile: '$(csmParametersFile)'
+    #overrideParameters: '-storageAccountType Standard_LRS'
+    deploymentMode: 'Incremental'
+    deploymentName: 'DeployPipelineTemplate'
