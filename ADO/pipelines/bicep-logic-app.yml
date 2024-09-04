@@ -28,6 +28,7 @@ steps:
   inputs:
     deploymentScope: 'Resource Group'
     ConnectedServiceName: '${{ parameters.azureServiceConnection }}'
+    SubscriptionName: '$(subscription-name)'
     action: 'Create Or Update Resource Group'
     resourceGroupName: '$(logic-apps-resource-group-name)'
     location: '$(location)'
