@@ -11,6 +11,6 @@ steps:
     inputs:
       azureSubscription: ${{ parameters.serviceConnectionName }}
       appName: ${{ parameters.logicAppName }}
-      package: $(Pipeline.Workspace)/${{ parameters.logicAppBuildPipelineLabel }}/${{ parameters.artifactName}}/*.zip
+      package: $(Pipeline.Workspace)/${{ parameters.logicAppBuildPipelineLabel }}/${{ parameters.artifactName}}/logicapps.zip
       appType: webApp
       deploymentMethod: runFromPackage

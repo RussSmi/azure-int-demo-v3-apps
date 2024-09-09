@@ -15,7 +15,7 @@ steps:
       rootFolderOrFile: '$(Build.SourcesDirectory)/logicapps'
       includeRootFolder: false
       archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/logicapps.zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
       replaceExistingArchive: true
-  - publish: '$(Build.ArtifactStagingDirectory)/logicapps.zip'
+  - publish: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
     artifact: '$(artifactName)'
