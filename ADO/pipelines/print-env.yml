@@ -1,0 +1,8 @@
+steps:
+  - script: |
+      env | sort
+    displayName: 'Print environment variables'
+  - script: |
+      sudo apt-get install -qq -y tree
+      tree
+    displayName: 'List files'
