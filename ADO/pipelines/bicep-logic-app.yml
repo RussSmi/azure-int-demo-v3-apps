@@ -29,7 +29,7 @@ steps:
     ConnectedServiceName: '${{ parameters.azureServiceConnection }}'
     SubscriptionName: '$(subscription-name)'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: '$(logic-apps-resource-group-name)'
+    resourceGroupName: '$(logic-apps-resource-group-name)' #This var is from the library
     location: '$(location)'
     templateLocation: 'Linked artifact'
     csmFile: '$(templateFile)'

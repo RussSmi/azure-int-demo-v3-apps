@@ -3,10 +3,11 @@ targetScope= 'resourceGroup'
 param env string = 'dev'  /// Use prod for production
 param location string = resourceGroup().location
 param storageAccountSku string = 'Standard_LRS'
+param serviceId string
 @description('Service ID used in resource naming to group all related resources')
 
 var key = uniqueString(resourceGroup().id)
-var logicAppName = 'la-${key}-${env}'
+var logicAppName = 'la-${serviceId}-${env}'
 var minimumElasticSize = 1
 var maximumElasticSize = 3
 

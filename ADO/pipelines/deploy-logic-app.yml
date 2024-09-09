@@ -14,7 +14,7 @@ stages:
             steps:
             - template: deploy.yml
               parameters:
-                logicAppName: 'rusmith-logic-app-dev'
+                logicAppName: 'la-aisv31-dev'
                 artifactName: '$(artifactName)'
                 serviceConnectionName: $(connection)
                 logicAppBuildPipelineLabel: 'package-logic-app'

@@ -13,6 +13,7 @@ module la 'modules/logicapp.bicep' = {
   params: {
     env: env
     location: location
+    serviceId: serviceId
   }
 }
 
