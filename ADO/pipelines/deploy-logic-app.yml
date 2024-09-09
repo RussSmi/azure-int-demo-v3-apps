@@ -1,10 +1,10 @@
 name: deploy-logic-app
 variables:
-  - template ./global.yml
+  - template: ./global.yml
 stages:
   - stage: Dev
     jobs:
-    - deploymwent: Dev_Deploy
+    - deployment: Dev_Deploy
       pool:
         vmImage: $(vmImageName)
       environment: 'dev'
