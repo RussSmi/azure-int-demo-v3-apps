@@ -17,5 +17,5 @@ steps:
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/logicapps.zip'
       replaceExistingArchive: true
-  -- publish: '$(Build.ArtifactStagingDirectory)/logicapps.zip'
+  - publish: '$(Build.ArtifactStagingDirectory)/logicapps.zip'
     artifact: '$(artifactName)'
