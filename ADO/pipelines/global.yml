@@ -1,0 +1,7 @@
+variables:
+  connection: 'rusmith-sandbox'
+  artifactName: 'LogicApp'
+  vmImageName: 'ubuntu-latest'
+  logicAppBuildPipelineLabel: build-logic-ap
+  logicAppProjectDirectoryName: logicAppSrc
+  pathToLogicAppProjectDirectory: '$(System.DefaultWorkingDirectory)/logicapps'

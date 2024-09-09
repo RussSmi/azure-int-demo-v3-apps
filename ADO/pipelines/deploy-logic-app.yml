@@ -1,0 +1,20 @@
+name: deploy-logic-app
+variables:
+  - template ./global.yml
+stages:
+  - stage: Dev
+    jobs:
+    - deploymwent: Dev_Deploy
+      pool:
+        vmImage: $(vmImageName)
+      environment: 'dev'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - template: deploy.yml
+              parameters:
+                logicAppName: 'rusmith-logic-app-dev'
+                artifactName: '$(artifactName)'
+                serviceConnectionName: $(connection)
+                logicAppBuildPipelineLabel: 'package-logic-app'

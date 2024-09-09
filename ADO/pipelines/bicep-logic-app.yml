@@ -6,11 +6,10 @@ name: Deploy Bicep files
 parameters:
 - name: azureServiceConnection
   type: string
-  default: 'rusmith-sandbox'
+  default: '$(connection)'
 
 variables:
-- name: vmImageName
-  value: 'ubuntu-latest'
+- template: ./global.yml
 - name: 'location'
   value: 'uksouth'
 - name: templateFile

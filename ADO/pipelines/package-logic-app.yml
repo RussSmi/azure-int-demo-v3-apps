@@ -1,0 +1,21 @@
+name: package-logic-app
+variables:
+  - template: ./global.yml
+trigger:
+  branches:
+    include: 
+      - main
+  paths:
+    include:
+      - ./global.yml
+      - ../../logicapps/*
+steps:
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)/logicapps'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/logicapps.zip'
+      replaceExistingArchive: true
+  -- publish: '$(Build.ArtifactStagingDirectory)/logicapps.zip'
+    artifact: '$(artifactName)'
