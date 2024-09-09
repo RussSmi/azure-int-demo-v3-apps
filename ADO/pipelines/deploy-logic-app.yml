@@ -1,6 +1,11 @@
 name: deploy-logic-app
 variables:
   - template: ./global.yml
+trigger: none
+resources:
+  pipelines:
+  - pipeline: package-logic-app
+    source: package-logic-app
 stages:
   - stage: Dev
     jobs:
