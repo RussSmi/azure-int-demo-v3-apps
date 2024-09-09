@@ -5,7 +5,7 @@ parameters:
   - name: logicAppBuildPipelineLabel
 
 steps:
-  - template: ../../printEnv.yml
+  - template: ./printEnv.yml
   - task: AzureWebApp@1
     displayName: Deploy WebApp
     inputs:
