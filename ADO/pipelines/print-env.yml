@@ -3,6 +3,9 @@ steps:
       env | sort
     displayName: 'Print environment variables'
   - script: |
+      pwd
+      ls
+      echo 'Install tree'
       sudo apt-get install -qq -y tree
       tree
     displayName: 'List files'
