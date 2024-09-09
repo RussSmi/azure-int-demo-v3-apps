@@ -17,6 +17,7 @@ stages:
         runOnce:
           deploy:
             steps:
+            - template: ./print-env.yml
             - template: deploy.yml
               parameters:
                 logicAppName: 'la-aisv31-dev'

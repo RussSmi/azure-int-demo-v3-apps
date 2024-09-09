@@ -1,7 +1,7 @@
 steps:
-  - script: |
-      env | sort
-    displayName: 'Print environment variables'
+  #- script: |
+  #    env | sort
+  #  displayName: 'Print environment variables'
   - script: |
       pwd
       ls
