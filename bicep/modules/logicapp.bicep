@@ -18,6 +18,7 @@ var logicAppStorageName = length(tempName) > 24 ? substring('stla${env}${key}',0
 ///Get reference to existing service bus namespace
 resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existing = {
   name: 'sbus-${serviceId}-${env}'
+  scope: resourceGroup('rg-sbus-${serviceId}-${env}') 
 }
 
 var endpoint = '${serviceBusNamespace.id}/AuthorizationRules/RootManageSharedAccessKey'
