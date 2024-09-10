@@ -156,6 +156,10 @@ resource siteLogicApp 'Microsoft.Web/sites@2023-01-01' = {
           name: 'serviceBus_connectionString'
           value: serviceBusConnectionString
         }
+        {
+          name: 'sbtopic'
+          value: 'sbtopicpub${serviceId}'
+        }
       ]
       use32BitWorkerProcess: true
     }
