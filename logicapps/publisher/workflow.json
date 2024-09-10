@@ -6,7 +6,7 @@
                 "type": "Xslt",
                 "kind": "DataMapper",
                 "inputs": {
-                    "content": "@triggerOutputs()",
+                    "content": "@triggerBody()",
                     "map": {
                         "source": "LogicApp",
                         "name": "mapFlatDevices.xslt"
