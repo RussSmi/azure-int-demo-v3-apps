@@ -18,7 +18,7 @@
                 "type": "ServiceProvider",
                 "inputs": {
                     "parameters": {
-                        "entityName": "sbtopicpubaisv3",
+                        "entityName": "@appsetting('sbtopic')",
                         "message": {
                             "contentData": "@body('Transform_using_Data_Mapper_XSLT')",
                             "contentType": "application/json"
