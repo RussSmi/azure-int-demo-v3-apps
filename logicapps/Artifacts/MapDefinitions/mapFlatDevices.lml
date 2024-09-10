@@ -6,3 +6,4 @@ $targetSchema: devices.json
 root:
   fullName: concat(/root/firstName, " ", /root/lastName)
   firstNameUpperCase: upper-case(/root/firstName)
+  phone: /root/phone

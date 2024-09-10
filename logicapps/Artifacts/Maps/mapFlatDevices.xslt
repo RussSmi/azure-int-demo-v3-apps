@@ -11,6 +11,14 @@
     <map>
       <string key="fullName">{concat(/*/*[@key='firstName'], ' ', /*/*[@key='lastName'])}</string>
       <string key="firstNameUpperCase">{upper-case(/*/*[@key='firstName'])}</string>
+      <xsl:choose>
+        <xsl:when test="local-name-from-QName(node-name(/*/*[@key='phone'])) = 'null'">
+          <null key="phone" />
+        </xsl:when>
+        <xsl:otherwise>
+          <string key="phone">{/*/*[@key='phone']}</string>
+        </xsl:otherwise>
+      </xsl:choose>
     </map>
   </xsl:template>
 </xsl:stylesheet>
