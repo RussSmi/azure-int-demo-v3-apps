@@ -15,6 +15,15 @@ var maximumElasticSize = 3
 var tempName = 'stla${env}${key}'
 var logicAppStorageName = length(tempName) > 24 ? substring('stla${env}${key}',0,24) : tempName
 
+///Get reference to existing service bus namespace
+resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existing = {
+  name: 'sbus-${serviceId}-${env}'
+}
+
+var endpoint = '${serviceBusNamespace.id}/AuthorizationRules/RootManageSharedAccessKey'
+var serviceBusConnectionString = listKeys(endpoint, serviceBusNamespace.apiVersion).primaryConnectionString
+
+/// Storage account for the logic app ///
 resource logicAppStorage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: logicAppStorageName
   location: location
@@ -141,6 +150,10 @@ resource siteLogicApp 'Microsoft.Web/sites@2023-01-01' = {
         {
           name: 'WORKFLOWS_RESOURCE_GROUP_NAME'
           value: resourceGroup().name
+        }
+        {
+          name: 'serviceBus_connectionString'
+          value: serviceBusConnectionString
         }
       ]
       use32BitWorkerProcess: true
