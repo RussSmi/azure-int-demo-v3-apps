@@ -27,3 +27,5 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
     publicAccess: 'None'
   }
 }
+
+output storageConnectionString string = listKeys(storage.id, storage.apiVersion).keys[0].value

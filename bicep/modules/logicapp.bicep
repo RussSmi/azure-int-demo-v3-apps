@@ -3,8 +3,11 @@ targetScope= 'resourceGroup'
 param env string = 'dev'  /// Use prod for production
 param location string = resourceGroup().location
 param storageAccountSku string = 'Standard_LRS'
-param serviceId string
+
 @description('Service ID used in resource naming to group all related resources')
+param serviceId string
+
+param clientStorageConnectionString string
 
 var key = uniqueString(resourceGroup().id)
 var logicAppName = 'la-${serviceId}-${env}'
@@ -163,6 +166,10 @@ resource siteLogicApp 'Microsoft.Web/sites@2023-01-01' = {
         {
           name: 'sbsubscription'
           value: 'sbsubSub${serviceId}'
+        }
+        {
+          name: 'AzureBlob_blobStorageEndpoint'
+          value: ''
         }
       ]
       use32BitWorkerProcess: true
