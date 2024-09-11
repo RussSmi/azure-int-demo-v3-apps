@@ -17,4 +17,12 @@ module la 'modules/logicapp.bicep' = {
   }
 }
 
+module storage 'modules/storage.bicep' = {
+  name: 'storage-mod-${env}'
+  params: {
+    location: location
+    env: env
+  }
+}
+
 output LogicAppName string = la.outputs.LogicAppName

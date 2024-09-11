@@ -160,6 +160,10 @@ resource siteLogicApp 'Microsoft.Web/sites@2023-01-01' = {
           name: 'sbtopic'
           value: 'sbtopicpub${serviceId}'
         }
+        {
+          name: 'sbsubscription'
+          value: 'sbsubSub${serviceId}'
+        }
       ]
       use32BitWorkerProcess: true
     }
