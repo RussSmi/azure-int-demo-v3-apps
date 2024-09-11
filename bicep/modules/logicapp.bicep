@@ -169,7 +169,7 @@ resource siteLogicApp 'Microsoft.Web/sites@2023-01-01' = {
         }
         {
           name: 'AzureBlob_blobStorageEndpoint'
-          value: ''
+          value: 'clientStorageConnectionString'
         }
       ]
       use32BitWorkerProcess: true
