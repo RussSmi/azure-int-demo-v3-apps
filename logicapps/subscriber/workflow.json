@@ -17,6 +17,26 @@
                     }
                 },
                 "runAfter": {}
+            },
+            "Complete_the_message_in_a_topic_subscription": {
+                "type": "ServiceProvider",
+                "inputs": {
+                    "parameters": {
+                        "topicName": "sbtopicpubaisv31",
+                        "subscriptionName": "sbsubSubaisv31",
+                        "lockToken": "@triggerBody()?['lockToken']"
+                    },
+                    "serviceProviderConfiguration": {
+                        "connectionName": "serviceBus",
+                        "operationId": "completeTopicMessageV2",
+                        "serviceProviderId": "/serviceProviders/serviceBus"
+                    }
+                },
+                "runAfter": {
+                    "Upload_blob_to_storage_container": [
+                        "SUCCEEDED"
+                    ]
+                }
             }
         },
         "contentVersion": "1.0.0.0",
@@ -26,8 +46,8 @@
                 "type": "ServiceProvider",
                 "inputs": {
                     "parameters": {
-                        "topicName": "@appsettings('sbtopic')",
-                        "subscriptionName": "@appsettings('sbsubscription')"
+                        "topicName": "sbtopicpubaisv31",
+                        "subscriptionName": "sbsubSubaisv31"
                     },
                     "serviceProviderConfiguration": {
                         "connectionName": "serviceBus",
