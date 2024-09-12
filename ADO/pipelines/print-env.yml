@@ -8,6 +8,6 @@ steps:
       echo 'Install tree'
       sudo apt-get install -qq -y tree
       echo 'tree /home/vsts/work/1'
-      tree '/home/vsts/work/1' -P *.bicep
+      tree '/home/vsts/work/1'
       
     displayName: 'List files'
