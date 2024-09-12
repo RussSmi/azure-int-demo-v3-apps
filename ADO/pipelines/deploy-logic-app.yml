@@ -38,11 +38,11 @@ stages:
                 logicAppBuildPipelineLabel: $(logicAppBuildPipelineLabel)
             - task: AzureResourceManagerTemplateDeployment@3
               inputs:
-                deploymentScope: 'Subscription'
+                deploymentScope: 'Resource Group'
                 ConnectedServiceName: '${{ parameters.azureServiceConnection }}'
                 SubscriptionName: '$(subscription-name)' #This var is from the library
                 action: 'Create Or Update Resource Group'
-                resourceGroupName: 'rg-apim-aisv31-dev' #This var is from the library
+                resourceGroupName: '$(apim-resource-group-name)' #This var is from the library
                 location: '$(location)'
                 templateLocation: 'Linked artifact'
                 csmFile: '$(templateFile)'
