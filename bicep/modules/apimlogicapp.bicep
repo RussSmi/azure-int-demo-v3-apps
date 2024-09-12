@@ -13,7 +13,7 @@ resource apiManagementService 'Microsoft.ApiManagement/service@2023-03-01-previe
   
 resource siteLogicApp 'Microsoft.Web/sites@2023-12-01' existing = {
   name: logicAppName
-  scope: resourceGroup()
+  scope: resourceGroup('rg-app-${serviceId}-${env}')
 }
 
 // get the logic app callback url
