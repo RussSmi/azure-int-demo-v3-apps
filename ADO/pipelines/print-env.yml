@@ -1,13 +1,16 @@
 steps:
-  #- script: |
-  #    env | sort
-  #  displayName: 'Print environment variables'
+  - script: |
+      env | sort
+    displayName: 'Print environment variables'
   - script: |
       pwd
       ls
       echo 'Install tree'
       sudo apt-get install -qq -y tree
-      tree
+      echo 'tree /home/vsts'
+      tree '/home/vsts'
+      echo 'tree $(Build.SourcesDirectory)'
       tree '$(Build.SourcesDirectory)'
+      echo 'tree $(Build.SourcesDirectory)/'
       tree '$(Build.SourcesDirectory)/'
     displayName: 'List files'
