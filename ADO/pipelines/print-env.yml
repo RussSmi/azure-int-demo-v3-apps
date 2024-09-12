@@ -8,4 +8,5 @@ steps:
       echo 'Install tree'
       sudo apt-get install -qq -y tree
       tree
+      tree $(Build.SourcesDirectory)
     displayName: 'List files'

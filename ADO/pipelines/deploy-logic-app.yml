@@ -11,6 +11,7 @@ variables:
     value: '$(Build.SourcesDirectory)/bicep/modules/apimlogicapp.bicep'
   - name: csmParametersFile
     value: '$(Build.SourcesDirectory)/bicep/modules/apimlogicapp.dev.bicepparam'
+  - group: 'ais-connection-vars-dev'
 trigger: none
 resources:
   pipelines:
