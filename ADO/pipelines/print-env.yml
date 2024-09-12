@@ -8,6 +8,6 @@ steps:
       echo 'Install tree'
       sudo apt-get install -qq -y tree
       echo 'tree /home/vsts/work'
-      tree '/home/vsts/work
+      tree '/home/vsts/work'
       
     displayName: 'List files'
