@@ -7,10 +7,7 @@ steps:
       ls
       echo 'Install tree'
       sudo apt-get install -qq -y tree
-      echo 'tree /home/vsts'
-      tree '/home/vsts'
-      echo 'tree $(Build.SourcesDirectory)'
-      tree '$(Build.SourcesDirectory)'
-      echo 'tree $(Build.SourcesDirectory)/'
-      tree '$(Build.SourcesDirectory)/'
+      echo 'tree /home/vsts/1'
+      tree '/home/vsts/1'
+      
     displayName: 'List files'
