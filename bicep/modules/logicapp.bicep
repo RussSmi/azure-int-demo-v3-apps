@@ -8,6 +8,7 @@ param storageAccountSku string = 'Standard_LRS'
 param serviceId string
 
 param clientStorageConnectionString string
+param clientStorageAccountName string
 
 var key = uniqueString(resourceGroup().id)
 var logicAppName = 'la-${serviceId}-${env}'
@@ -179,6 +180,23 @@ resource siteLogicApp 'Microsoft.Web/sites@2023-01-01' = {
   }
 }
 
+resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
+  name: clientStorageAccountName
+  scope: resourceGroup()
+}
+
+// Storage Blob Data Contributor role id from docs
+var roleId = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
+
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: storage
+  name: guid(storage.id, roleId)
+  properties: {
+    roleDefinitionId: roleId
+    principalId: siteLogicApp.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
 output LogicAppName string = logicAppName
 
 

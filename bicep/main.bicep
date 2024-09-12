@@ -22,6 +22,7 @@ module la 'modules/logicapp.bicep' = {
     location: location
     serviceId: serviceId
     clientStorageConnectionString: storage.outputs.storageConnectionString
+    clientStorageAccountName: storage.outputs.storageAccountName
   }
 }
 
