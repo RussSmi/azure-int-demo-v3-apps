@@ -8,7 +8,7 @@ param env string = 'dev'
 param serviceId string
 
 module storage 'modules/storage.bicep' = {
-  name: 'storage-mod-${env}'
+  name: 'storage-deploy-${env}'
   params: {
     location: location
     env: env
@@ -16,7 +16,7 @@ module storage 'modules/storage.bicep' = {
 }
 
 module la 'modules/logicapp.bicep' = {
-  name: 'la-mod-${env}'
+  name: 'la-deploy-${env}'
   params: {
     env: env
     location: location

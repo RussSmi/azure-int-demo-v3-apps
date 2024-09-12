@@ -186,7 +186,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
 }
 
 // Storage Blob Data Contributor role id from docs
-var roleId = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
+var roleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: storage
