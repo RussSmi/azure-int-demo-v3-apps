@@ -8,9 +8,9 @@ variables:
   - name: 'location'
     value: 'uksouth'
   - name: templateFile
-    value: '$(Build.SourcesDirectory)/bicep/modules/apimlogicapp.bicep'
+    value: '$(Build.SourcesDirectory)/bicep/apimlogicapp.bicep'
   - name: csmParametersFile
-    value: '$(Build.SourcesDirectory)/bicep/modules/apimlogicapp.dev.bicepparam'
+    value: '$(Build.SourcesDirectory)/bicep/apimlogicapp.dev.bicepparam'
   - group: 'ais-connection-vars-dev'
 trigger: none
 resources:

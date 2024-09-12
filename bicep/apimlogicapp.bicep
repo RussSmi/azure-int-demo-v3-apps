@@ -1,23 +1,23 @@
 targetScope = 'resourceGroup'
 param env string = 'dev'
 param serviceId string = 'aisv31'
-param logicAppName string = 'la-${serviceId}-${env}'
 param workflowName string = 'publisher'
 param apimName string = 'apim-${serviceId}-${env}'
-
 
 resource apiManagementService 'Microsoft.ApiManagement/service@2023-03-01-preview' existing = {
   name: apimName
   scope: resourceGroup()
 }
-  
-resource siteLogicApp 'Microsoft.Web/sites@2023-12-01' existing = {
-  name: logicAppName
-  scope: resourceGroup('rg-app-${serviceId}-${env}')
-}
 
-// get the logic app callback url
-var workflowUrl = listCallbackUrl('${siteLogicApp.id}/hostruntime/runtime/webhooks/workflow/api/management/workflows/${workflowName}/triggers/When_a_HTTP_request_is_received', '2023-12-01').value
+module logicappUrl 'modules/logicappurl.bicep' = {
+  name: 'logicappUrl'
+  params: {
+    env: env
+    serviceId: serviceId
+    logicAppName: 'la-${serviceId}-${env}'
+    workflowName: workflowName
+  }
+}
 
 // Create API to access the logic app
 resource api 'Microsoft.ApiManagement/service/apis@2023-03-01-preview' = {
@@ -25,7 +25,7 @@ resource api 'Microsoft.ApiManagement/service/apis@2023-03-01-preview' = {
   name: workflowName
   properties: {
     displayName: workflowName
-    serviceUrl: workflowUrl
+    serviceUrl: logicappUrl.outputs.workflowUrl
     subscriptionRequired: false
     path: workflowName
     protocols: [
@@ -50,4 +50,4 @@ resource operation 'Microsoft.ApiManagement/service/apis/operations@2023-09-01-p
   }
 }
 
-output workflowUrl string = workflowUrl
+
