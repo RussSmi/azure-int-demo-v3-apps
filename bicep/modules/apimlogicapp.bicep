@@ -1,6 +1,5 @@
 targetScope = 'resourceGroup'
 param env string = 'dev'
-param location string = resourceGroup().location
 param serviceId string = 'aisv31'
 param logicAppName string = 'la-${serviceId}-${env}'
 param workflowName string = 'publisher'
