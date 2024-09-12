@@ -190,7 +190,7 @@ var roleId = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: storage
-  name: guid(storage.id, roleId)
+  name: guid(resourceGroup().id, storage.id)
   properties: {
     roleDefinitionId: roleId
     principalId: siteLogicApp.identity.principalId
