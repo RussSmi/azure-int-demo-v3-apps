@@ -186,13 +186,24 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
 }
 
 // Storage Blob Data Contributor role id from docs
-var roleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
+var dataContributorRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
+var resourceGroupReaderRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: storage
   name: guid(resourceGroup().id, storage.id)
   properties: {
-    roleDefinitionId: roleId
+    roleDefinitionId: dataContributorRoleId
+    principalId: siteLogicApp.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource roleAssignment2 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: resourceGroup()
+  name: guid(resourceGroup().id, storage.id)
+  properties: {
+    roleDefinitionId: resourceGroupReaderRoleId
     principalId: siteLogicApp.identity.principalId
     principalType: 'ServicePrincipal'
   }
