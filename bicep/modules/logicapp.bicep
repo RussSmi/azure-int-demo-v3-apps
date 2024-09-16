@@ -201,7 +201,7 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 
 resource roleAssignment2 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: resourceGroup()
-  name: guid(resourceGroup().id, storage.id)
+  name: guid(resourceGroup().id, resourceGroupReaderRoleId)
   properties: {
     roleDefinitionId: resourceGroupReaderRoleId
     principalId: siteLogicApp.identity.principalId
