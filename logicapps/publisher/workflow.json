@@ -41,7 +41,7 @@
                 "kind": "Http",
                 "inputs": {
                     "statusCode": 200,
-                    "body": "Message sent"
+                    "body": "Message sent\n@{body('Transform_using_Data_Mapper_XSLT')}"
                 },
                 "runAfter": {
                     "Send_message": [
