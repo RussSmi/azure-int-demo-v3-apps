@@ -23,7 +23,7 @@ pool:
   vmImage: $(vmImageName)
 
 steps:
-- task: AzureResourceManagerTemplateDeployment@3
+- task: AzureResourceManagerTemplateDeployment@3.243.1
   inputs:
     deploymentScope: 'Resource Group'
     ConnectedServiceName: '${{ parameters.azureServiceConnection }}'

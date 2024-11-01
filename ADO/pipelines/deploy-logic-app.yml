@@ -36,7 +36,7 @@ stages:
                 artifactName: '$(artifactName)'
                 serviceConnectionName: $(connection)
                 logicAppBuildPipelineLabel: $(logicAppBuildPipelineLabel)
-            - task: AzureResourceManagerTemplateDeployment@3
+            - task: AzureResourceManagerTemplateDeployment@3.243.1
               inputs:
                 deploymentScope: 'Resource Group'
                 ConnectedServiceName: '${{ parameters.azureServiceConnection }}'
